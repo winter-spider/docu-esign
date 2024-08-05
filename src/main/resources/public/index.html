@@ -11,7 +11,7 @@
         if (hasStatus) {
             let status = new URLSearchParams(window.location.search).get("status");
             if (status == "true") {
-
+                let ref = new URLSearchParams(window.location.search).get("ref");
 
                 document.write(
                     decodeURIComponent(
