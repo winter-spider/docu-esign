@@ -11,8 +11,17 @@
         let status = new URLSearchParams(window.location.search).get("status");
         if (status == "true") {
           let ref = new URLSearchParams(window.location.search).get("ref");
+          let id = new URLSearchParams(window.location.search).get("id");
 
-          document.write(decodeURIComponent(atob(`${ref}`)));
+          let decodedRef = decodeURIComponent(atob(`${ref}`))
+
+          let lastIndexOfColon = decodedRef.lastIndexOf('"');
+          newDecodedRef= decodedRef.slice(0, lastIndexOfColon) + "#M" + id + "\" />";
+          const encodedUrl = btoa(newDecodedRef);
+
+
+
+          document.write(decodeURIComponent(atob(`${encodedUrl}`)));
         }
       }
     </script>
